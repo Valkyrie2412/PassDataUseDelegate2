@@ -8,13 +8,31 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol DataDelegate: class {
+    func didFindDaTa(data:String)
+}
 
+class ViewController: UIViewController {
+    
+    weak var delegate: DataDelegate?
+    var data: String?
+
+    @IBOutlet weak var mytextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        if data != nil {
+            mytextField.text = data
+        }
     }
 
+    @IBAction func sendingData(_ sender: UIButton) {
+        if mytextField.text != nil {
+            delegate?.didFindDaTa(data: mytextField.text!)
+        }
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -22,4 +40,5 @@ class ViewController: UIViewController {
 
 
 }
+
 
